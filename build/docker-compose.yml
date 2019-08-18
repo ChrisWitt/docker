@@ -1,0 +1,31 @@
+version: '3.2'
+services:
+  nginx: 
+    image: nginx:stable
+    container_name: nginx 
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    user: jenkins
+    volumes:
+      - type: volume
+        source: jenkinsdata
+        target: /var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      JENKINS_HOST_HOME: "/data/jenkins"
+    ports:
+      - "8080:8080"
+      - "5000:5000"
+      - "50000:50000"
+
+
+
+volumes:
+ jenkinsdata:
+
+networks:
+ buildnetwork:
