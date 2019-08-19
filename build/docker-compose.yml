@@ -32,9 +32,27 @@ services:
     networks:
       - buildnetwork
 
+  gitea:
+    image: gitea/gitea:latest
+    container_name: gitea
+    #why not working byt working for jenkins?
+    #user: gitea
+    environment:
+      ROOT_URL : "gitea"
+    volumes:
+      - type: volume
+        source: giteadata
+        target: /data
+    expose:
+      - "3000"
+    ports:
+      - "222:22"
+    networks:
+      - buildnetwork
 
 volumes:
  jenkinsdata:
+ giteadata:
 
 networks:
  buildnetwork:
